@@ -2,9 +2,11 @@ package com.example.WebSocket.service;
 
 import com.example.WebSocket.domain.User;
 import com.example.WebSocket.repository.UserRepository;
-import jakarta.annotation.PostConstruct;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -14,15 +16,21 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // 서버 시작 시 기본 유저를 추가하는 메서드
-    @PostConstruct
-    public void init() {
-        if (userRepository.findByUsername("admin").isEmpty()) {
-            User user = new User();
-            user.setUsername("admin");
-            user.setPassword(passwordEncoder.encode("1234")); // 비밀번호 암호화 필수!
-            user.setRole("ROLE_ADMIN");
-            userRepository.save(user);
+    @Transactional
+    public void registerUser(String username, String password) {
+        if (userRepository.findByUsername(username).isPresent()) {
+            throw new RuntimeException("이미 존재하는 사용자입니다.");
         }
+
+        // 비밀번호 해싱
+        String encodedPassword = passwordEncoder.encode(password);
+
+        // 유저 생성 후 저장
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(encodedPassword);
+        user.setRole("USER");
+
+        userRepository.save(user);
     }
 }

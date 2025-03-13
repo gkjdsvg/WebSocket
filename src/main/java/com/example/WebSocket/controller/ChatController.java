@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ChatController {
-    @GetMapping("/home")
+    @GetMapping("/chat")
     public String homePage() {
-        return "home";  // chat.html 파일을 반환 (resources/templates/chat.html)
+        return "chat";  // chat.html 파일을 반환 (resources/templates/chat.html)
     }
 }

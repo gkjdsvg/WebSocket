@@ -9,11 +9,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동 증가 ID
-    private Integer id;
+    private int id;
 
     @Column(unique = true, nullable = false)
     private String username;
