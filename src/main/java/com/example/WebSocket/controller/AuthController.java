@@ -1,43 +1,31 @@
 package com.example.WebSocket.controller;
 
 
+import com.example.WebSocket.DTO.SignUpRequestDto;
 import com.example.WebSocket.JWT.JwtTokenProvider;
+import com.example.WebSocket.domain.User;
+import com.example.WebSocket.service.NoteService;
+import com.example.WebSocket.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpHeaders;
 
 @RestController
-@RequestMapping("/api/auth")
 public class AuthController {
     private final JwtTokenProvider jwtTokenProvider;
+    private final NoteService noteService;
 
     @Autowired
-    public AuthController(JwtTokenProvider jwtTokenProvider) {
+    public AuthController(JwtTokenProvider jwtTokenProvider, NoteService noteService) {
         this.jwtTokenProvider = jwtTokenProvider;
+        this.noteService = noteService;
     }
-
-//    //로그인 API
-//    @PostMapping("/login")
-//    public String login(@RequestParam String username, @RequestParam String password) {
-//        // 로그인 로직 (여기서는 간단히 예시로만 사용)
-//        if (username.equals("user@example") && password.equals("123456")) {
-//            // 로그인 성공 시 JWT 토큰 생성
-//            return jwtTokenProvider.createToken(username);
-//        } else {
-//            throw new RuntimeException("Invalid credentials");
-//        }
-//    }
-//
-//    @GetMapping("/login")
-//    public ResponseEntity<String> getUserInfo(@RequestParam(defaultValue = "Guest") String username) {
-//        return ResponseEntity.ok("User: " + username);
-//    }
-
     // 로그인 및 사용자 정보 조회 API
     // 로그인 API (JWT 발급)
-    @PostMapping("/login")
+    @PostMapping("api/auth/login")
     public ResponseEntity<String> login(@RequestParam(defaultValue = "Guest") String username,
                                         @RequestParam(required = false) String password) {
 
@@ -54,6 +42,11 @@ public class AuthController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
+    }
+
+    @PostMapping("/join")
+    public Long join(@Validated @RequestBody SignUpRequestDto request) throws Exception {
+        return UserService.signUp(request)
     }
 
 }

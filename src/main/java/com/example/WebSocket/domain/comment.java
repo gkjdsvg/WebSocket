@@ -19,9 +19,6 @@ public class comment {
     @Column(nullable = false)
     private String content;
 
-    @Column(unique = true, nullable = false)
-    private String username;
-
     @ManyToOne
     @JoinColumn(name = "comment_username", referencedColumnName = "username")
     private User user;
