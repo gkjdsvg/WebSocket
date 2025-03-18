@@ -14,14 +14,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpHeaders;
 
 @RestController
+@RequestMapping("/api/auth/login")
 public class AuthController {
     private final JwtTokenProvider jwtTokenProvider;
-    private final NoteService noteService;
 
     @Autowired
-    public AuthController(JwtTokenProvider jwtTokenProvider, NoteService noteService) {
+    public AuthController(JwtTokenProvider jwtTokenProvider) {
         this.jwtTokenProvider = jwtTokenProvider;
-        this.noteService = noteService;
     }
     // 로그인 및 사용자 정보 조회 API
     // 로그인 API (JWT 발급)
@@ -43,10 +42,4 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
     }
-
-    @PostMapping("/join")
-    public Long join(@Validated @RequestBody SignUpRequestDto request) throws Exception {
-        return UserService.signUp(request)
-    }
-
 }

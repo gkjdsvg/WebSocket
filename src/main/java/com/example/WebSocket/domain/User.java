@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchConnectionDetails;
+
+import java.math.BigInteger;
 
 @Getter
 @Setter
@@ -13,15 +16,11 @@ import lombok.Setter;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동 증가 ID
-    private int id;
+    private BigInteger id;
 
     @Column(unique = true, nullable = false)
     private String username;
 
     @Column(nullable = false)
     private String password;
-
-    @Column(nullable = false)
-    private String role; // 예: ROLE_USER, ROLE_ADMIN
-
 }

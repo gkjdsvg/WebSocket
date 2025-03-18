@@ -21,10 +21,6 @@
                 <input type="text" placeholder="이름" required>
             </div>
             <div class="input-box">
-                <i class="fa-solid fa-envelope"></i>
-                <input type="email" placeholder="이메일" required>
-            </div>
-            <div class="input-box">
                 <i class="fa-solid fa-lock"></i>
                 <input type="password" placeholder="비밀번호" required>
             </div>
@@ -127,3 +123,35 @@
         cursor: pointer;
     }
 </style>
+
+<script>
+    document.querySelector('.btn').addEventListener('click', function() {
+        const username = document.querySelector('input[type="text"]').value;
+        const password = document.querySelector('input[type="password"]').value;
+
+        const userData = {
+            username: username,
+            password: password
+        };
+
+        fetch('/join', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('회원가입이 성공했습니다!');
+                } else {
+                    alert('회원가입 실패');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('에러가 발생했습니다.');
+            });
+    });
+</script>
