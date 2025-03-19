@@ -1,10 +1,7 @@
 package com.example.WebSocket.service;
 
-import com.example.WebSocket.DTO.SignUpRequestDto;
 import com.example.WebSocket.domain.User;
 import com.example.WebSocket.repository.UserRepository;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,9 +27,10 @@ public class UserService {
         String encodedPassword = passwordEncoder.encode(password);
 
         // 유저 생성 후 저장
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(encodedPassword);
+        User user = User.builder()
+                .username(username) // 올바르게 username을 전달
+                .password(encodedPassword) // 인코딩된 비밀번호 저장
+                .build();
 
         userRepository.save(user);
     }

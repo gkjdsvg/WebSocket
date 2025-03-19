@@ -26,11 +26,6 @@ public class SecurityConfig {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    @Autowired
-    public JwtTokenProvider jwtTokenProvider(JwtProperties jwtProperties) {
-        return new JwtTokenProvider(jwtProperties);
-    }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

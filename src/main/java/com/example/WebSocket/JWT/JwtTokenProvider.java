@@ -15,11 +15,11 @@ import java.util.Date;
 public class JwtTokenProvider {
     private final JwtProperties jwtProperties;
 
-    @Autowired
     public JwtTokenProvider(JwtProperties jwtProperties) {  // ✅ 매개변수 추가!
         this.jwtProperties = jwtProperties;
     }
 
+    //토큰 생성
     public String createToken(String username) {
         long expirationTime = 1000 * 60 * 60; // 1시간
 

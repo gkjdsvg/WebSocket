@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpHeaders;
 
 @RestController
-@RequestMapping("/api/auth/login")
+@RequestMapping("/api/auth")
 public class AuthController {
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -24,7 +24,7 @@ public class AuthController {
     }
     // 로그인 및 사용자 정보 조회 API
     // 로그인 API (JWT 발급)
-    @PostMapping("api/auth/login")
+    @PostMapping("/login")
     public ResponseEntity<String> login(@RequestParam(defaultValue = "Guest") String username,
                                         @RequestParam(required = false) String password) {
 

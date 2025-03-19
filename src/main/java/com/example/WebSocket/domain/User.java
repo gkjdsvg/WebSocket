@@ -1,18 +1,21 @@
 package com.example.WebSocket.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchConnectionDetails;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.math.BigInteger;
+import java.util.Collection;
+import java.util.List;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @Entity
+@AllArgsConstructor
 @Table(name = "user")
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동 증가 ID
