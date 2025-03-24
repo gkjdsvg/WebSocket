@@ -13,6 +13,17 @@ import java.util.Date;
 public class NoteRequestDto {
     private Long note_Id;
     private String content;
-    private String user;
+    private String note_username;
     private Date created_at;
+
+    public NoteRequestDto() {
+    }
+
+    public String getUsername() {
+        return note_username;
+    }
+
+    public void setUsername(String username) {
+        this.note_username = username;
+    }
 }

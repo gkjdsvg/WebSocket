@@ -13,4 +13,10 @@ public class SignUpRequestDto {
     private Long id;
     private String username;
     private String password;
+
+    public SignUpRequestDto(long id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
 }

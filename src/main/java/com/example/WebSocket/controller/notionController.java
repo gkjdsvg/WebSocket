@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/task")
+@RequestMapping("/note")
 @Slf4j
 public class notionController {
     private final NoteService noteService;
@@ -17,7 +17,7 @@ public class notionController {
         this.noteService = noteService;
     }
 
-    @GetMapping("create")
+    @PostMapping("create")
     public ResponseEntity<Note> createNote(@RequestBody NoteRequestDto noteRequestDto) {
         Note savedNote = noteService.save(noteRequestDto);
         return ResponseEntity.ok(savedNote);
