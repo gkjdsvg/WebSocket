@@ -18,7 +18,9 @@
       <li class="py-2 px-3 hover:bg-gray-200 rounded cursor-pointer relative" onmouseover="showAddButton('noteAddBtn')" onmouseout="hideAddButton('noteAddBtn')">
         <a href="/note" class="block w-full h-full">Notes</a>
         <!-- Notes 항목에 + 버튼 추가 -->
-        <button id="noteAddBtn" class="absolute top-1 right-1 bg-blue-500 text-white p-1 rounded-full hidden" onclick="location.href='/note/create'">+</button>
+        <form action='/note/create' method="post">
+        <button id="noteAddBtn" class="absolute top-1 right-1 bg-blue-500 text-white p-1 rounded-full hidden" onclick="createNote()">+</button>
+        </form>
       </li>
       <li class="py-2 px-3 hover:bg-gray-200 rounded cursor-pointer relative" onmouseover="showAddButton('taskAddBtn')" onmouseout="hideAddButton('taskAddBtn')">
         <a href="/task" class="block w-full h-full">Tasks</a>
@@ -146,6 +148,32 @@
     li.appendChild(span);
     li.appendChild(deleteBtn);
     commentsContainer.appendChild(li);
+  }
+
+  function createNote() {
+    fetch('/note/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ content: '새로운 노트', username: 'User'
+      }) // 필요하면 데이터 추가
+    })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('노트 생성 실패');
+              }
+              return response.json(); // 서버가 JSON 응답을 준다면
+            })
+            .then(data => {
+              console.log('노트 생성 성공:', data);
+              alert('노트가 생성되었습니다!');
+              location.reload(); // 페이지 새로고침 or 다른 페이지 이동
+            })
+            .catch(error => {
+              console.error('오류 발생:', error);
+              alert('노트 생성에 실패했습니다.');
+            });
   }
 </script>
 </body>

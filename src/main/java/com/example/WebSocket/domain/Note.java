@@ -6,13 +6,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.tool.schema.Action;
 
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -30,16 +26,9 @@ public class Note {
     @Column(nullable = false)
     private LocalDateTime created_at;
 
-    @Column(nullable = false)
-    private String note_username;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false) // 🔥 FK 컬럼
+    @ManyToOne
+    @JoinColumn(name = "note_username", referencedColumnName = "username", nullable = false) // username으로 연관 설정
     private User user;
-
-    public Note(String content) {
-        this.content = content;
-    }
 
     @PrePersist
     protected void onCreate() {
@@ -48,7 +37,10 @@ public class Note {
         }
     }
 
-    public void setUser(String user) {
-        this.note_username = user;
+    public void setUser(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null");
+        }
+        this.user = user;
     }
 }

@@ -30,5 +30,11 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<Note> noteList = new ArrayList<>();
+
+    public void addNote(Note note) {
+        noteList.add(note);
+        note.setUser(this); // 🔥 이 부분이 핵심
+    }
 }

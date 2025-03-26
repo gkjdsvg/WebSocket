@@ -21,15 +21,15 @@ public class NoteService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Note save(NoteRequestDto noteRequestDto) {
-        // username으로 User를 조회
+    public void createNoteForUser(NoteRequestDto noteRequestDto) {
         User user = userRepository.findByUsername(noteRequestDto.getUsername())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + noteRequestDto.getUsername()));
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        // Note 객체 생성 후 user를 세팅
-        Note note = new Note(noteRequestDto.getContent());
-        note.setUser(user);
+        Note note = new Note();
+        note.setContent(noteRequestDto.getContent());
 
-        return noteRepository.save(note);  // 저장
+        user.addNote(note); // ✅ 편의 메서드 사용 (양방향 관계 설정)
+
+        noteRepository.save(note);
     }
 }
