@@ -22,6 +22,8 @@ public class NoteService {
 
     @Transactional
     public void createNoteForUser(NoteRequestDto noteRequestDto) {
+        System.out.println("Requested username: " + noteRequestDto.getUsername());
+
         User user = userRepository.findByUsername(noteRequestDto.getUsername())
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 

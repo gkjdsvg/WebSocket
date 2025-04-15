@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8089")
 @RequestMapping("/note")
 @Slf4j
 public class notionController {
@@ -19,7 +20,7 @@ public class notionController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createNote(@RequestBody NoteRequestDto noteRequestDto) { //
+    public ResponseEntity<String> createNote(NoteRequestDto noteRequestDto) { //
         try {
             // NoteRequestDto 객체를 전달
             noteService.createNoteForUser(noteRequestDto);

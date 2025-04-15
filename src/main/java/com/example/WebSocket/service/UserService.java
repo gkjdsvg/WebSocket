@@ -1,5 +1,7 @@
 package com.example.WebSocket.service;
 
+import com.example.WebSocket.DTO.LoginRequest;
+import com.example.WebSocket.JWT.JwtTokenProvider;
 import com.example.WebSocket.domain.User;
 import com.example.WebSocket.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,10 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Transactional
@@ -33,5 +37,20 @@ public class UserService {
                 .build();
 
         userRepository.save(user);
+    }
+
+    public String login(String username, String password) {
+        if (username == null || password == null) {
+            throw new IllegalArgumentException("username이나 password가 null입니다.");
+        }
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("사용자가 없습니다"));
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new RuntimeException("비밀번호가 일치하지 않습니다");
+        }
+
+        return jwtTokenProvider.createToken(user.getUsername());
     }
 }

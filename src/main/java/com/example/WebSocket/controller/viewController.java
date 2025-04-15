@@ -10,6 +10,11 @@ public class viewController {
         return "noteAdd";
     }
 
+    @GetMapping("/note/create")
+    public String createNote() {
+        return "note";
+    }
+
     @GetMapping("/task")
     public String task() {
         return "taskAdd";
@@ -27,6 +32,6 @@ public class viewController {
 
     @GetMapping("/login")
     public String login() {
-        return "login";
+        return "notion-login";
     }
 }

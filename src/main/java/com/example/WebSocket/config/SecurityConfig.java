@@ -40,7 +40,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/login").permitAll()  // 공개 API는 인증 없이 허용
                         .requestMatchers("/ws/**").permitAll()
                         .requestMatchers("/home").permitAll()
-                        .anyRequest().permitAll() // 나머지 경로는 인증 필요
+                        .anyRequest().authenticated() // 나머지 경로는 인증 필요
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);  // JwtAuthenticationFilter 추가
 

@@ -24,7 +24,7 @@
                 <i class="fa-solid fa-lock"></i>
                 <input type="password" placeholder="비밀번호" required>
             </div>
-            <button class="btn">가입하기</button>
+            <button type="button" class="btn" onclick="location.href='notion-login'">가입하기</button>
         </div>
     </div>
 </div>
@@ -135,7 +135,7 @@
         };
 
         fetch('/join', {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },

@@ -57,6 +57,7 @@
     </div>
   </div>
 </div>
+<script src = "/js/note.js"></script>
 
 
 <script>
@@ -152,7 +153,7 @@
 
   function createNote() {
     fetch('/note/create', {
-      method: 'POST',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json'
       },

@@ -19,6 +19,9 @@ public class NoteRequestDto {
     public NoteRequestDto() {
     }
 
+    public NoteRequestDto(Long noteId, String content, String username) {
+    }
+
     public String getUsername() {
         return note_username;
     }
