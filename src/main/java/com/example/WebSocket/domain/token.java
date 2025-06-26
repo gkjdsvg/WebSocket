@@ -14,8 +14,13 @@ public class token {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "refresh_token")
-    private String refresh_token;
+    @Column(name = "refreshToken")
+    private String refreshToken;
 
+    @Column(name = "token_user_id")
+    private long tokenUserId;
 
+    public Long getUserId() {
+        return tokenUserId;
+    }
 }

@@ -8,6 +8,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
+import java.util.Date;
+import java.util.Optional;
+
 @Service
 @Transactional
 public class UserService {
@@ -52,5 +56,9 @@ public class UserService {
         }
 
         return jwtTokenProvider.createToken(user.getUsername());
+    }
+
+    public User findByUserId(Long userId) {
+        return userRepository.findByUserId(userId).orElseThrow(() -> new RuntimeException("해당 유저를 찾을 수 없습니다."));
     }
 }

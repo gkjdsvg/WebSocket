@@ -56,10 +56,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 }
 
-//tasks.named('test') {
-//	useJUnitPlatform()
-//}
-
-tasks.withType(JavaCompile).configureEach {
-	options.compilerArgs += '-parameters'
+tasks.named('test') {
+	useJUnitPlatform()
 }
+
+//tasks.withType(JavaCompile).configureEach {
+//	options.compilerArgs += '-parameters'
+//}

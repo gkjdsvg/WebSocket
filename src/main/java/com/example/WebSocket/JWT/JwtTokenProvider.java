@@ -1,34 +1,36 @@
 package com.example.WebSocket.JWT;
 
+import com.example.WebSocket.domain.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.Date;
 
 @Component
 @Slf4j
+@Service
+@RequiredArgsConstructor
 public class JwtTokenProvider {
     private final JwtProperties jwtProperties;
-
-    public JwtTokenProvider(JwtProperties jwtProperties) {  // ✅ 매개변수 추가!
-        this.jwtProperties = jwtProperties;
-    }
 
     //토큰 생성
     public String createToken(String username) {
         long expirationTime = 1000 * 60 * 60; // 1시간
-
         Date now = new Date();
+        Date expiry = new Date(now.getTime() + expirationTime);
 
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + expirationTime))
+                .setExpiration(expiry)
                 .setIssuer(jwtProperties.getIssuer())
                 .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey().getBytes()) // 비밀키로 서명
                 .compact();
@@ -55,12 +57,9 @@ public class JwtTokenProvider {
         return claims.getSubject(); // 사용자 이메일 반환
     }
 
-    public String getUsernameFromToken(String token) {
-        String secretKey = "study-springboot-is-a-secure-key-32-characters";
-        Claims claims = Jwts.parser()
-                .setSigningKey(secretKey)
-                .parseClaimsJws(token)
-                .getBody();
-        return claims.getSubject();
+    public String generateToken(User user, Duration expiredAt) {
+        Date now = new Date();
+        Date expiration = new Date(now.getTime() + expiredAt.toMillis());
+        return createToken(user.getUsername());
     }
 }
