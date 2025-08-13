@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +23,7 @@ public class NoteService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void createNoteForUser(NoteRequestDto noteRequestDto) {
+    public void createNoteForUser(@RequestParam NoteRequestDto noteRequestDto) {
         System.out.println("Requested username: " + noteRequestDto.getUsername());
 
         User user = userRepository.findByUsername(noteRequestDto.getUsername())

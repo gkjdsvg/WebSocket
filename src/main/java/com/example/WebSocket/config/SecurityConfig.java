@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) //CSRF 비활성화
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/login").permitAll()  // 공개 API는 인증 없이 허용
+                        .requestMatchers("/api/auth/login", "/join", "/api/user/me", "/login", "/note/create").permitAll()  // 공개 API는 인증 없이 허용
                         .requestMatchers("/ws/**").permitAll()
                         .requestMatchers("/home").permitAll()
                         .anyRequest().authenticated() // 나머지 경로는 인증 필요

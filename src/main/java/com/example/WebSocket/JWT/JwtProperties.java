@@ -16,5 +16,4 @@ public class JwtProperties {
 
     @Value("${jwt.issuer}")
     private String issuer;
-
 }
