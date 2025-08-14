@@ -29,6 +29,9 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name="email", nullable = false)
+    private String email;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<Note> noteList = new ArrayList<>();

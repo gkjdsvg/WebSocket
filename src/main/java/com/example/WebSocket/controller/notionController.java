@@ -1,8 +1,10 @@
 package com.example.WebSocket.controller;
 
+import com.example.WebSocket.DTO.NoteDto;
 import com.example.WebSocket.DTO.NoteRequestDto;
 import com.example.WebSocket.domain.Note;
 import com.example.WebSocket.domain.User;
+import com.example.WebSocket.repository.NoteRepository;
 import com.example.WebSocket.service.NoteService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -11,15 +13,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+import java.util.Optional;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:8089")
 @RequestMapping("/note")
 @Slf4j
 public class notionController {
     private final NoteService noteService;
+    private final NoteRepository noteRepository;
 
-    public notionController(NoteService noteService) {
+    public notionController(NoteService noteService, NoteRepository noteRepository) {
         this.noteService = noteService;
+        this.noteRepository = noteRepository;
     }
 
     @PostMapping("/create")
@@ -33,5 +40,14 @@ public class notionController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+
+    @PatchMapping("/{id}")
+    public NoteDto updateNote(@PathVariable Long id, @RequestBody Map<String, String> body) {
+        Note note = noteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("노트 없음"));
+        note.setContent(body.get("content"));
+        noteRepository.save(note);
+        return new NoteDto(note);
     }
 }

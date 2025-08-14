@@ -36,7 +36,7 @@ public class ListController {
         for (Note note : notes) {
             // Note 객체를 NoteResponseDTO로 변환
             NoteResponseDTO dto = new NoteResponseDTO(
-                    note.getNote_id(),  // id
+                    note.getId(),  // id
                     note.getContent(),   // 내용
                     note.getUser().getUsername()  // 작성자 이름
             );

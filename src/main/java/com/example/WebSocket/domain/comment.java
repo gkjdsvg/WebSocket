@@ -16,7 +16,8 @@ import java.math.BigInteger;
 public class comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동 증가 ID
-    private Long comment_id;
+    @Column(name = "comment_id")
+    private Long id;
 
     @Column(nullable = false)
     private String content;

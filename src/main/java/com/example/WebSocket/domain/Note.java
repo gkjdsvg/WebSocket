@@ -18,7 +18,8 @@ import java.time.LocalDateTime;
 public class Note {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동 증가 ID
-    private Long note_id;
+    @Column(name = "note_id")
+    private Long id;
 
     @Column(nullable = true)
     private String content;
